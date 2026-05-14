@@ -3,6 +3,8 @@ import re
 import glob
 import shutil
 import argparse
+import numpy as np
+import soundfile as sf
 import pandas as pd
 from tqdm import tqdm
 
@@ -30,6 +32,8 @@ if __name__ == "__main__":
     parser.add_argument("--metadata-output", default="./data/movement_disorders/metadata.csv", type=str)
     parser.add_argument("--variant", default="clean", choices=["clean", "raw", "LF"],
                         help="Which file variant to use: 'clean', 'raw' (no suffix), or 'LF'")
+    parser.add_argument("--onset-trim-sec", default=0.0, type=float,
+                        help="Seconds to trim from the start of each file (removes evaluator instruction, default: 0)")
     args = parser.parse_args()
 
     os.makedirs(args.new_data_dir, exist_ok=True)
@@ -69,7 +73,13 @@ if __name__ == "__main__":
             sample_id = f"{gita_id}_{vowel_upper}{rep}"
             new_name = f"{group_id}_{VOWEL_TASK}_{sample_id}.wav"
             new_path = os.path.join(args.new_data_dir, new_name)
-            shutil.copy(wav_path, new_path)
+
+            if args.onset_trim_sec > 0:
+                audio, sr = sf.read(wav_path)
+                trim_samples = int(args.onset_trim_sec * sr)
+                sf.write(new_path, audio[trim_samples:], sr)
+            else:
+                shutil.copy(wav_path, new_path)
             copied += 1
 
             if gita_id not in subjects:

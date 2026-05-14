@@ -59,6 +59,8 @@ This performs:
 
 File variant options for step 1: `clean` (default), `raw`, `LF`.
 
+> **Note on recording content.** Each file contains the patient's sustained-vowel phonation. An evaluator instruction ("say /a/…") may appear in the first ~0.5 s before phonation onset. Energy-profile analysis shows no two-speaker alternation pattern; longer files (up to 43 s) follow a single-speaker gradual-decay profile consistent with Maximum Phonation Time tasks. To be safe, you can trim the start of every file by passing `--onset-trim-sec 1.0` to the restructure script (adds a 1-second leading silence removal before normalization).
+
 ### Naming convention after restructure
 
 | Original | Renamed |
@@ -111,7 +113,7 @@ To reproduce the original paper experiments on the PC-GITA corpus, follow the up
 
 | Dataset | Subjects (HC / PD) | Tasks | Language |
 |---------|-------------------|-------|----------|
-| Movement Disorders (Kaggle) | 22 / 22 | Sustained vowels (a, i) | Korean |
+| Movement Disorders (Kaggle) | 22 / 22 | Sustained vowels (a, i) | English |
 | PC-GITA (original paper) | 50 / 50 | Vowels, DDK, sentences, read text | Spanish |
 
 ---
