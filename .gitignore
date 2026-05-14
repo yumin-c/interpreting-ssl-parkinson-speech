@@ -3,6 +3,24 @@ exps/
 plots/
 splits/
 
+# Large model/feature files
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.h5
+
+# Dataset archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Conda / pip envs
+.conda/
+conda-meta/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
