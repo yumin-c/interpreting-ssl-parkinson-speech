@@ -18,17 +18,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     metadata = pd.read_csv(args.metadata_path)
-    metadata["label"] = metadata["RECODING ORIGINAL NAME"].map(
-        lambda x: 1 if "AVPEPUDEAC" not in x else 0
-    )
-    metadata["group_id"] = metadata["label"].map(lambda x: "PD" if x else "HC")
+    # label and group_id are stored explicitly in the metadata CSV (supports 3 classes)
     metadata["sex"] = metadata["SEX"].map(lambda x: 1 if x == "M" else 0)
 
     dataset = []
     wavs = glob.glob(os.path.join(args.samples_dir, "*.wav"), recursive=True)
     for wav_path in tqdm(wavs):
         sample_id = os.path.basename(wav_path).split(".")[0]
-        m = re.search(r"(AVPEPUDEA(?:C)?\d{4})", sample_id)
+        m = re.search(r"(AVPEPUDEA(?:C|AD)?\d{4})", sample_id)
         if not m:
             continue
         subject_id = m.group(1)

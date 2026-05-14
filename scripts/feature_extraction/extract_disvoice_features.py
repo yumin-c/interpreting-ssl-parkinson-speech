@@ -29,7 +29,7 @@ def extract_prosody():
     for wav_file in tqdm(wav_files):
         output_path = os.path.join(output_dir, os.path.basename(wav_file)).replace('.wav', '.npz')
         prosody_features = prosody.extract_features_file(wav_file, static=True, plots=False, fmt='npy')
-        prosody_features = np.expand_dims(prosody_features, 0) if args.static else prosody_features
+        prosody_features = np.expand_dims(prosody_features, 0)
 
         # -- data curation
         prosody_features[np.isnan(prosody_features)] = 0

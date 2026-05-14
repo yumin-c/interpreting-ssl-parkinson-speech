@@ -1,8 +1,6 @@
 #!/bin/bash
-# Run cross_full experiments on the Movement Disorders (Kaggle) dataset.
-# Run after:
-#   scripts/runs/dataset_preparation/movement_disorders.sh
-#   scripts/runs/feature_extraction/movement_disorders.sh
+# Run self_ssl experiments on Movement Disorders dataset (wav2vec only, no DisVoice).
+# Run after: scripts/runs/feature_extraction/movement_disorders.sh
 
 set -e
 
@@ -16,8 +14,8 @@ for f in 0 1 2 3 4; do
       --validation-dataset ./splits/$dataset/fold_$f/test.csv \
       --test-dataset ./splits/$dataset/fold_$f/test.csv \
       --filter-tasks SUSTAINED-VOWELS \
-      --output-dir ./exps/$dataset/cross_full/SUSTAINED-VOWELS/seed${seed}/fold_${f}/ \
-      --yaml-overrides device:cuda seed:$seed model:cross_full \
+      --output-dir ./exps/$dataset/self_ssl/SUSTAINED-VOWELS/seed${seed}/fold_${f}/ \
+      --yaml-overrides device:cuda seed:$seed model:self_ssl \
       --save-attention-scores False
 
 done;

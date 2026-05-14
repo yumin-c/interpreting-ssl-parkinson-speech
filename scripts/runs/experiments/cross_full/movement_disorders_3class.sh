@@ -1,17 +1,14 @@
 #!/bin/bash
-# Run cross_full experiments on the Movement Disorders (Kaggle) dataset.
-# Run after:
-#   scripts/runs/dataset_preparation/movement_disorders.sh
-#   scripts/runs/feature_extraction/movement_disorders.sh
+# 3-class (HC / PD / AD) cross_full experiments on Movement Disorders dataset.
 
 set -e
 
-dataset=movement_disorders
+dataset=movement_disorders_3class
 for seed in 42; do
 for f in 0 1 2 3 4; do
 
   CUDA_VISIBLE_DEVICES=0 python scripts/model_pipeline/pipeline.py \
-      --config ./configs/framework.yaml \
+      --config ./configs/framework_3class.yaml \
       --training-dataset ./splits/$dataset/fold_$f/fulltrain.csv \
       --validation-dataset ./splits/$dataset/fold_$f/test.csv \
       --test-dataset ./splits/$dataset/fold_$f/test.csv \
